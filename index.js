@@ -32,11 +32,57 @@
     }
   }
 
+  async function updateUser (user) {
+    try {
+      await pool.request()
+        .input('id', sql.VarChat(50), user.id)
+        .input('navn', sql.VarChat(100), user.navn)
+        .input('adresse', sql.VarChat(250), user.adresse)
+        .input('postnr', sql.VarChat(50), user.postnr)
+        .input('land', sql.VarChat(50), user.land)
+        .input('tlf', sql.VarChat(50), user.tlf)
+        .input('mob', sql.VarChat(50), user.mob)
+        .input('epost', sql.VarChat(50), user.epost)
+        .input('info', sql.VarChat(50), user.info)
+        .input('ref_kost', sql.VarChat(50), user.ref_kost)
+        .input('ref_avd', sql.VarChat(50), user.ref_avd)
+        .input('ref_rom', sql.VarChat(50), user.ref_rom)
+        .query(`UPDATE personer SET navn=@navn, adresse=@adresse, postnr=@postnr, land=@land, tlf=@tlf, mob=@mob, epost=@epost, info=@info, ref_kost=@ref_kost, ref_avd=@ref_avd, ref_rom=@ref_rom WHERE id = @id`)
+      return
+    } catch (error) {
+      log('error', error)
+      process.exit(1)
+    }
+  }
+
+  async function insertUser (user) {
+    try {
+      await pool.request()
+        .input('id', sql.VarChat(50), user.id)
+        .input('navn', sql.VarChat(100), user.navn)
+        .input('adresse', sql.VarChat(250), user.adresse)
+        .input('postnr', sql.VarChat(50), user.postnr)
+        .input('land', sql.VarChat(50), user.land)
+        .input('tlf', sql.VarChat(50), user.tlf)
+        .input('mob', sql.VarChat(50), user.mob)
+        .input('epost', sql.VarChat(50), user.epost)
+        .input('info', sql.VarChat(50), user.info)
+        .input('ref_kost', sql.VarChat(50), user.ref_kost)
+        .input('ref_avd', sql.VarChat(50), user.ref_avd)
+        .input('ref_rom', sql.VarChat(50), user.ref_rom)
+        .query(`INSERT INTO personer (id, navn, adresse, postnr, land, tlf, mob, epost, info, ref_kost, ref_avd, ref_rom) VALUES (@id, @navn, @adresse, @postnr, @land, @tlf, @mob, @epost, @info, @ref_kost, @ref_avd, @ref_rom)`)
+      return
+    } catch (error) {
+      log('error', error)
+      process.exit(1)
+    }
+  }
+
   async function getUser (id) {
     try {
       const { recordset } = await pool.request()
         .input('id', sql.VarChar(50), id)
-        .query(`SELECT TOP 1 id, navn, adresse, postnr, land, tlf, epost, info, ref_kost, ref_avd, ref_rom, sted = (SELECT sted FROM postadr PO WHERE P.postnr = PO.Postnr), avd = (SELECT navn FROM avdelinger A WHERE P.ref_avd = A.id), kost = (SELECT navn FROM koststeder K WHERE P.ref_kost = K.id) FROM personer P WHERE P.id = @id`)
+        .query(`SELECT TOP 1 id, navn, adresse, postnr, land, tlf, mob, epost, info, ref_kost, ref_avd, ref_rom, sted = (SELECT sted FROM postadr PO WHERE P.postnr = PO.Postnr), avd = (SELECT navn FROM avdelinger A WHERE P.ref_avd = A.id), kost = (SELECT navn FROM koststeder K WHERE P.ref_kost = K.id) FROM personer P WHERE P.id = @id`)
       return recordset
     } catch (error) {
       log('error', error)
@@ -45,7 +91,7 @@
   }
 
   const userExist = await checkUserExist('0411grfr')
-  const user = await getUser('0411grfr')
-  console.log(user)
+  const userInfo = await getUser('0411grfr')
+  console.log(userInfo)
   process.exit(0)
 })()
