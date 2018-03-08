@@ -25,7 +25,9 @@
       const { recordset } = await pool.request()
         .input('id', sql.VarChar(50), id)
         .query(`SELECT TOP 1 id FROM personer WHERE id = @id`)
-      return recordset.length !== 0
+      const exists = recordset.length !== 0
+      log('info', `${id} ${!exists ? 'does not' : ''} exist in database ${config.inventarxl.database}`)
+      return exists
     } catch (error) {
       log('error', error)
       process.exit(1)
@@ -35,19 +37,20 @@
   async function updateUser (user) {
     try {
       await pool.request()
-        .input('id', sql.VarChat(50), user.id)
-        .input('navn', sql.VarChat(100), user.navn)
-        .input('adresse', sql.VarChat(250), user.adresse)
-        .input('postnr', sql.VarChat(50), user.postnr)
-        .input('land', sql.VarChat(50), user.land)
-        .input('tlf', sql.VarChat(50), user.tlf)
-        .input('mob', sql.VarChat(50), user.mob)
-        .input('epost', sql.VarChat(50), user.epost)
-        .input('info', sql.VarChat(50), user.info)
-        .input('ref_kost', sql.VarChat(50), user.ref_kost)
-        .input('ref_avd', sql.VarChat(50), user.ref_avd)
-        .input('ref_rom', sql.VarChat(50), user.ref_rom)
+        .input('id', sql.VarChar(50), user.id)
+        .input('navn', sql.VarChar(100), user.navn)
+        .input('adresse', sql.VarChar(250), user.adresse)
+        .input('postnr', sql.VarChar(50), user.postnr)
+        .input('land', sql.VarChar(50), user.land)
+        .input('tlf', sql.VarChar(50), user.tlf)
+        .input('mob', sql.VarChar(50), user.mob)
+        .input('epost', sql.VarChar(50), user.epost)
+        .input('info', sql.VarChar(50), user.info)
+        .input('ref_kost', sql.VarChar(50), user.ref_kost)
+        .input('ref_avd', sql.VarChar(50), user.ref_avd)
+        .input('ref_rom', sql.VarChar(50), user.ref_rom)
         .query(`UPDATE personer SET navn=@navn, adresse=@adresse, postnr=@postnr, land=@land, tlf=@tlf, mob=@mob, epost=@epost, info=@info, ref_kost=@ref_kost, ref_avd=@ref_avd, ref_rom=@ref_rom WHERE id = @id`)
+      log('info', `Updated user ${id} in database ${config.inventarxl.database}`)
       return
     } catch (error) {
       log('error', error)
@@ -58,18 +61,18 @@
   async function insertUser (user) {
     try {
       await pool.request()
-        .input('id', sql.VarChat(50), user.id)
-        .input('navn', sql.VarChat(100), user.navn)
-        .input('adresse', sql.VarChat(250), user.adresse)
-        .input('postnr', sql.VarChat(50), user.postnr)
-        .input('land', sql.VarChat(50), user.land)
-        .input('tlf', sql.VarChat(50), user.tlf)
-        .input('mob', sql.VarChat(50), user.mob)
-        .input('epost', sql.VarChat(50), user.epost)
-        .input('info', sql.VarChat(50), user.info)
-        .input('ref_kost', sql.VarChat(50), user.ref_kost)
-        .input('ref_avd', sql.VarChat(50), user.ref_avd)
-        .input('ref_rom', sql.VarChat(50), user.ref_rom)
+        .input('id', sql.VarChar(50), user.id)
+        .input('navn', sql.VarChar(100), user.navn)
+        .input('adresse', sql.VarChar(250), user.adresse)
+        .input('postnr', sql.VarChar(50), user.postnr)
+        .input('land', sql.VarChar(50), user.land)
+        .input('tlf', sql.VarChar(50), user.tlf)
+        .input('mob', sql.VarChar(50), user.mob)
+        .input('epost', sql.VarChar(50), user.epost)
+        .input('info', sql.VarChar(50), user.info)
+        .input('ref_kost', sql.VarChar(50), user.ref_kost)
+        .input('ref_avd', sql.VarChar(50), user.ref_avd)
+        .input('ref_rom', sql.VarChar(50), user.ref_rom)
         .query(`INSERT INTO personer (id, navn, adresse, postnr, land, tlf, mob, epost, info, ref_kost, ref_avd, ref_rom) VALUES (@id, @navn, @adresse, @postnr, @land, @tlf, @mob, @epost, @info, @ref_kost, @ref_avd, @ref_rom)`)
       return
     } catch (error) {
@@ -90,8 +93,8 @@
     }
   }
 
-  const userExist = await checkUserExist('0411grfr')
-  const userInfo = await getUser('0411grfr')
+  const userExists = await checkUserExist('engj')
+  const userInfo = await getUser('engj')
   console.log(userInfo)
   process.exit(0)
 })()
