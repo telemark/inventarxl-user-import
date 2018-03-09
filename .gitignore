@@ -49,11 +49,5 @@ yarn.lock
 # package-lock.json
 package-lock.json
 
-# .next
-.next
-
-# out
-out
-
 # env
 .env
