@@ -20,7 +20,7 @@
   },
   "license": "MIT",
   "engines": {
-    "node": ">= 8.10.0"
+    "node": ">= 8.14.0"
   },
   "dependencies": {
     "dotenv": "6.2.0",
