@@ -50,7 +50,7 @@
         .input('ref_avd', sql.VarChar(50), user.ref_avd)
         .input('ref_rom', sql.VarChar(50), user.ref_rom)
         .query(`UPDATE personer SET navn=@navn, adresse=@adresse, postnr=@postnr, land=@land, tlf=@tlf, mob=@mob, epost=@epost, info=@info, ref_kost=@ref_kost, ref_avd=@ref_avd, ref_rom=@ref_rom WHERE id = @id`)
-      log('info', `Updated user ${id} in database ${config.inventarxl.database}`)
+      log('info', `Updated user ${user.id} in database ${config.inventarxl.database}`)
       return
     } catch (error) {
       log('error', error)
