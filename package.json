@@ -24,7 +24,7 @@
   },
   "dependencies": {
     "dotenv": "7.0.0",
-    "mssql": "4.3.5"
+    "mssql": "4.3.7"
   },
   "devDependencies": {
     "ava": "1.4.0",
