@@ -23,7 +23,7 @@
     "node": ">= 8.14.0"
   },
   "dependencies": {
-    "dotenv": "8.0.0",
+    "dotenv": "8.2.0",
     "mssql": "4.3.7"
   },
   "devDependencies": {
